@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+    {% csrf_token %}
+
+    <div class="blocks">
+
+        <section class="one" id="home">
+            <div class="box"></div>
+            <div class="my-shadow">
+                <img src="{% static 'src/logo.png' %}" class="" alt="logo">
+            </div>
+            <h1>ЛАГІДНА</h1>
+        </section>
+
+        {% for el in data %}
+            <section class="{{ el.tag }}" id="{{ el.tag }}">
+                <div class="content">
+                    <h1>{{ el.name }}</h1>
+                    {% if el.data %}
+                        <div class="content-block">
+                            {% for pearson in el.data %}
+                                <div class="person" data-bs-toggle="modal" data-bs-target="#p-{{ el.tag }}-{{ pearson.id }}">
+                                    <img alt="profile" src="{{ pearson.photo }}">
+                                    <span>{{ pearson.name }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        {% endfor %}
+
+
+        <section class="info" id="info">
+            <div class="content">
+                <h1 class="blue">Про нас</h1>
+
+                <div class="content-block">
+                    <h4>{{ info.text }}</h4>
+                </div>
+            </div>
+        </section>
+
+        <div class="zero-section"></div>
+    </div>
+
+
+    <nav>
+        <div class="btn-block btn-block-left">
+            <a href="#home" class="btn">
+                <img src="{% static 'src/home.png' %}" alt="home">
+                <div><span>Головна</span></div>
+            </a><br>
+
+            <a href="#blogger" class="btn">
+                <img src="{% static 'src/blogger.png' %}" alt="home">
+                <div><span>Блогери</span></div>
+            </a><br>
+
+            <a href="#musician" class="btn">
+                <img src="{% static 'src/music.png' %}" alt="home">
+                <div><span>Музиканти</span></div>
+            </a><br>
+
+            <a href="#personality" class="btn">
+                <img src="{% static 'src/profile.png' %}" alt="home">
+                <div><span>Особистості</span></div>
+            </a>
+        </div>
+
+
+        <div class="btn-block btn-block-right">
+
+            <a href="#artist" class="btn">
+                <div><span>Митці</span></div>
+                <img src="{% static 'src/art.png' %}" alt="home">
+            </a><br>
+
+            <a href="#scientist" class="btn">
+                <div><span>Науковці</span></div>
+                <img src="{% static 'src/science.png' %}" alt="home">
+            </a><br>
+
+            <a href="#project" class="btn">
+                <div><span>Проекти</span></div>
+                <img src="{% static 'src/project.png' %}" alt="home">
+            </a><br>
+
+            <a href="#info" class="btn">
+                <div><span>Про нас</span></div>
+                <img src="{% static 'src/info.png' %}" alt="home">
+            </a>
+        </div>
+    </nav>
+
+
+    {% for el in data %}
+        {% for pearson in el.data %}
+            <div class="modal fade" id="p-{{ el.tag }}-{{ pearson.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <div class="person-info">
+                                <img alt="profile" class="profile-pic" src="{{ pearson.photo }}">
+                                <h5 class="modal-title" id="exampleModalLabel"> {{ pearson.name }}</h5>
+                                {% autoescape off %}
+                                    {{ pearson.links }}
+                                {% endautoescape %}
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            {% if pearson.direction %}
+                                <p class="direction">{{ pearson.direction }}</p>
+                            {% endif %}
+
+                            {% if pearson.description %}
+                                <p class="description">{{ pearson.description }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+
+
+    <div class="min-nav">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#home">💙💛 Лагідна 💙💛</a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="navbarsExample03" style="">
+                    <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown"
+                               aria-expanded="false">Категорії</a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdown03">
+                                <li><a class="dropdown-item" href="#blogger"><img src="{% static 'src/blogger.png' %}">Блогери</a>
+                                <li><a class="dropdown-item" href="#musician"><img src="{% static 'src/music.png' %}">Музиканти</a>
+                                <li><a class="dropdown-item" href="#personality"><img
+                                        src="{% static 'src/profile.png' %}">Особистості</a>
+                                <li><a class="dropdown-item" href="#artist"><img src="{% static 'src/art.png' %}">Митці</a>
+                                <li><a class="dropdown-item" href="#scientist"><img
+                                        src="{% static 'src/science.png' %}">Науковці</a>
+                                <li><a class="dropdown-item" href="#project"><img src="{% static 'src/project.png' %}">Проекти</a>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#info">Про нас</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+{% endblock body %}
